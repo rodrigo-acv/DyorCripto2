@@ -1056,11 +1056,11 @@ header {
     /* ── HERO: 3 colunas — info | contratos | gauge ── */
     .res-hero {
       display: grid;
-      grid-template-columns: 1fr 240px 260px;
-      gap: 16px;
+      grid-template-columns: minmax(0, 1fr) 230px 240px;
+      gap: 14px;
       max-width: 1200px;
       margin: 0 auto 0;
-      padding: 28px 20px 24px;
+      padding: 20px 20px 20px;
       animation: fadeUp 0.4s ease both;
       align-items: start;
     }
@@ -1907,6 +1907,7 @@ header {
       <div class="res-hero-left">
 
         <!-- Logo + Nome + Botão Refresh (fix 4: refresh junto ao nome) -->
+        <!-- Logo + Nome + Refresh + Nova Pesquisa — tudo na mesma linha -->
         <div class="res-hero-name-row">
           <img id="hero-logo" class="hero-logo" src="" alt="" onerror="this.style.display='none'"/>
           <h1 class="hero-title" id="hero-title">—</h1>
@@ -1914,9 +1915,10 @@ header {
             <span class="btn-refresh-icon" id="refresh-icon">↻</span>
             <span id="refresh-countdown">3:00</span>
           </button>
+          <button class="btn-back" onclick="goBack()" style="flex-shrink:0">← Voltar</button>
         </div>
 
-        <!-- Descrição do projeto (fix 2+3: alinhada à esquerda, em pt-BR via JS) -->
+        <!-- Descrição do projeto -->
         <div class="res-hero-desc" id="hero-desc">—</div>
 
         <!-- Links: ticker, posição, redes sociais -->
@@ -1929,9 +1931,6 @@ header {
           &nbsp;·&nbsp;
           <a href="https://www.coingecko.com" target="_blank" class="res-api-link">CoinGecko API</a>
         </div>
-
-        <!-- Botão voltar -->
-        <button class="btn-back" onclick="goBack()">← Nova Pesquisa</button>
 
       </div>
 
@@ -2596,35 +2595,24 @@ header {
       if (!d.description) {
         descEl.textContent = 'Sem descrição disponível.';
       } else {
-        /* Mostra em inglês imediatamente enquanto traduz */
         descEl.textContent = d.description;
         descEl.style.opacity = '0.5';
 
-        /* Traduz via Claude API */
-        fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514',
-            max_tokens: 300,
-            messages: [{
-              role: 'user',
-              content: 'Traduza o texto abaixo para português do Brasil de forma natural e concisa. Responda APENAS com a tradução, sem explicações:\n\n' + d.description
-            }]
+        /* Traduz via Google Translate (endpoint público, sem chave) */
+        var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=pt&dt=t&q=' + encodeURIComponent(d.description);
+        fetch(url)
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            /* Resposta é array de arrays — junta os fragmentos traduzidos */
+            var translated = data[0].map(function(seg) { return seg[0]; }).join('');
+            if (translated && descEl) {
+              descEl.textContent = translated;
+              descEl.style.opacity = '1';
+            }
           })
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          var translated = data.content && data.content[0] && data.content[0].text;
-          if (translated && descEl) {
-            descEl.textContent = translated;
-            descEl.style.opacity = '1';
-          }
-        })
-        .catch(function() {
-          /* Se falhar, mantém o original em inglês */
-          if (descEl) descEl.style.opacity = '1';
-        });
+          .catch(function() {
+            if (descEl) descEl.style.opacity = '1';
+          });
       }
     }
 
