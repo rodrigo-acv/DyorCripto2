@@ -1097,17 +1097,16 @@ header {
       animation: gradShift 5s ease infinite;
     }
 
-    /* Descrição do projeto */
+    /* Descrição do projeto — alinhada à esquerda sem padding artificial */
     .res-hero-desc {
       font-size: 13px;
       color: var(--res-text-muted);
       line-height: 1.6;
-      max-height: 60px;
+      max-height: 58px;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
-      padding-left: 70px; /* alinha com o nome (depois do logo) */
     }
 
     /* Links: ticker, rank, redes sociais */
@@ -1115,7 +1114,6 @@ header {
       display: flex;
       flex-wrap: wrap;
       gap: 7px;
-      padding-left: 70px;
     }
     .hero-link {
       display: inline-flex;
@@ -1138,14 +1136,13 @@ header {
       background: var(--res-violet-soft);
     }
 
-    /* Linha de atualização + botão refresh */
+    /* Linha de atualização — sem padding, alinhada à esquerda */
     .res-update-row {
       display: flex;
       align-items: center;
       gap: 7px;
       font-size: 11px;
       color: var(--res-text-dim);
-      padding-left: 70px;
       flex-wrap: wrap;
     }
     .res-update-dot {
@@ -1213,12 +1210,12 @@ header {
       to   { transform: rotate(360deg); }
     }
 
-    /* Lado direito: contratos + gauge lado a lado */
+    /* Lado direito: contratos + gauge EMPILHADOS (não lado a lado) */
     .res-hero-right {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 14px;
-      align-items: start;
+      align-items: stretch;
     }
 
     /* ── Cards base ── */
@@ -1581,8 +1578,27 @@ header {
        ══════════════════════════════════════════════════════════════ */
     .gauge-card { grid-column: 3; }
 
-    /* SVG ocupa toda a largura do card, altura proporcional ao viewBox */
-    #gauge-svg { width: 100%; display: block; }
+    /* SVG do gauge — menor para caber compacto */
+    #gauge-svg { width: 100%; max-width: 220px; display: block; margin: 0 auto; }
+
+    /* Gauge card compacto: SVG + info + legenda em linha */
+    .gauge-card .gauge-info { text-align: center; padding: 2px 0 6px; }
+    .gauge-card .stages {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+      justify-content: center;
+    }
+    .gauge-card .stage {
+      display: flex; align-items: center; gap: 5px;
+      padding: 3px 8px;
+      border-radius: 8px;
+      cursor: default;
+      transition: background 0.2s;
+    }
+    .gauge-card .stage.active {
+      background: rgba(108,92,231,0.18);
+    }
 
     /*
       AGULHA — animação via CSS transform (não atributo SVG).
@@ -1886,29 +1902,28 @@ header {
       <!-- ── ESQUERDA ─────────────────────────────────────────── -->
       <div class="res-hero-left">
 
-        <!-- Logo + Nome -->
+        <!-- Logo + Nome + Botão Refresh (fix 4: refresh junto ao nome) -->
         <div class="res-hero-name-row">
           <img id="hero-logo" class="hero-logo" src="" alt="" onerror="this.style.display='none'"/>
           <h1 class="hero-title" id="hero-title">—</h1>
+          <button class="btn-refresh" id="btn-refresh" onclick="refreshData()" title="Atualizar dados agora" style="margin-left:auto;flex-shrink:0">
+            <span class="btn-refresh-icon" id="refresh-icon">↻</span>
+            <span id="refresh-countdown">3:00</span>
+          </button>
         </div>
 
-        <!-- Descrição do projeto -->
+        <!-- Descrição do projeto (fix 2+3: alinhada à esquerda, em pt-BR via JS) -->
         <div class="res-hero-desc" id="hero-desc">—</div>
 
         <!-- Links: ticker, posição, redes sociais -->
         <div class="hero-links" id="hero-links"></div>
 
-        <!-- Atualização + fonte + refresh -->
+        <!-- Linha de atualização + fonte -->
         <div class="res-update-row">
           <span class="res-update-dot"></span>
           Atualizado em <span id="update-time">—</span>
           &nbsp;·&nbsp;
           <a href="https://www.coingecko.com" target="_blank" class="res-api-link">CoinGecko API</a>
-          &nbsp;·&nbsp;
-          <button class="btn-refresh" id="btn-refresh" onclick="refreshData()" title="Atualizar dados agora">
-            <span class="btn-refresh-icon" id="refresh-icon">↻</span>
-            <span id="refresh-countdown">3:00</span>
-          </button>
         </div>
 
         <!-- Botão voltar -->
@@ -2996,9 +3011,12 @@ header {
         pctFree:           pctFree,
         pctLocked:         pctLocked,
         tvl: tvlValue,
-        description: (cgData.description && cgData.description.en)
-          ? cgData.description.en.replace(/<[^>]+>/g, '').substring(0, 300)
-          : '',
+        description: (function() {
+          var desc = cgData.description || {};
+          /* Tenta português do Brasil primeiro, depois inglês */
+          var text = desc['pt'] || desc['pt-br'] || desc['en'] || '';
+          return text.replace(/<[^>]+>/g, '').substring(0, 300);
+        })(),
         website:  links.homepage   ? (links.homepage[0]  || null) : null,
         twitter:  twitterHandle    ? 'https://twitter.com/'+twitterHandle  : null,
         telegram: telegramHandle   ? 'https://t.me/'+telegramHandle        : null,
