@@ -1053,17 +1053,20 @@ header {
        PÁGINA DE RESULTADO — novo layout
        ══════════════════════════════════════════════════════════════ */
 
-    /* ── HERO: 3 colunas em percentual ──────────────────────────────
-       ↓↓↓ AJUSTE AQUI — soma tem que ser 100% ↓↓↓          */
+    /* ── HERO: 3 cards independentes ────────────────────────────────
+       Cada card tem largura própria em px.
+       Regra: a soma dos 3 + gaps (12px × 2 = 24px) + padding (32px)
+       NÃO pode ultrapassar a largura da tela.
+       Ex tela 1200px: 500 + 280 + 300 + 24 + 32 = 1136px ✅
+
+       ↓↓↓ AJUSTE AQUI — valores independentes em px ↓↓↓        */
     .res-hero {
-      --col-inf:      10%;   /* #_Largura card INF       */
-      --col-contrato: 10%;   /* #_Largura card CONTRATOS */
-      --col-estagio:  45%;   /* #_Largura card ESTÁGIO   */
-      /* ↑↑↑ Soma = 100% ↑↑↑                             */
+      --col-inf:      500px;  /* #_Largura card INF       */
+      --col-contrato: 280px;  /* #_Largura card CONTRATOS */
+      --col-estagio:  300px;  /* #_Largura card ESTÁGIO   */
 
       display: grid;
       grid-template-columns: var(--col-inf) var(--col-contrato) var(--col-estagio);
-      gap: 0;          /* sem gap — os % já incluem o espaço */
       column-gap: 12px;
       max-width: 1200px;
       margin: 0 auto;
