@@ -1053,15 +1053,16 @@ header {
        PÁGINA DE RESULTADO — novo layout
        ══════════════════════════════════════════════════════════════ */
 
-    /* ── HERO: topo dividido em esquerda + direita ── */
+    /* ── HERO: 3 colunas — info | contratos | gauge ── */
     .res-hero {
       display: grid;
-      grid-template-columns: 1fr 460px;
-      gap: 20px;
+      grid-template-columns: 1fr 240px 260px;
+      gap: 16px;
       max-width: 1200px;
       margin: 0 auto 0;
       padding: 28px 20px 24px;
       animation: fadeUp 0.4s ease both;
+      align-items: start;
     }
 
     /* Lado esquerdo */
@@ -1070,6 +1071,9 @@ header {
       flex-direction: column;
       gap: 10px;
     }
+
+    /* Lado direito agora é direto — contratos e gauge são filhos do res-hero */
+    .res-hero-right { display: contents; }
 
     .res-hero-name-row {
       display: flex;
@@ -2588,7 +2592,41 @@ header {
 
     /* Descrição do projeto */
     var descEl = document.getElementById('hero-desc');
-    if (descEl) descEl.textContent = d.description || 'Sem descrição disponível.';
+    if (descEl) {
+      if (!d.description) {
+        descEl.textContent = 'Sem descrição disponível.';
+      } else {
+        /* Mostra em inglês imediatamente enquanto traduz */
+        descEl.textContent = d.description;
+        descEl.style.opacity = '0.5';
+
+        /* Traduz via Claude API */
+        fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 300,
+            messages: [{
+              role: 'user',
+              content: 'Traduza o texto abaixo para português do Brasil de forma natural e concisa. Responda APENAS com a tradução, sem explicações:\n\n' + d.description
+            }]
+          })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var translated = data.content && data.content[0] && data.content[0].text;
+          if (translated && descEl) {
+            descEl.textContent = translated;
+            descEl.style.opacity = '1';
+          }
+        })
+        .catch(function() {
+          /* Se falhar, mantém o original em inglês */
+          if (descEl) descEl.style.opacity = '1';
+        });
+      }
+    }
 
     var chg = d.priceChange24h || 0;
 
