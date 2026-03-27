@@ -1061,9 +1061,9 @@ header {
 
        ↓↓↓ AJUSTE AQUI — valores independentes em px ↓↓↓        */
     .res-hero {
-      --col-inf:      100px;  /* #_Largura card INF       */
-      --col-contrato: 150px;  /* #_Largura card CONTRATOS */
-      --col-estagio:  50px;  /* #_Largura card ESTÁGIO   */
+      --col-inf:      500px;  /* #_Largura card INF       */
+      --col-contrato: 280px;  /* #_Largura card CONTRATOS */
+      --col-estagio:  300px;  /* #_Largura card ESTÁGIO   */
 
       display: grid;
       grid-template-columns: var(--col-inf) var(--col-contrato) var(--col-estagio);
@@ -1085,6 +1085,7 @@ header {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      justify-content: center; /* centraliza verticalmente em relação aos outros cards */
     }
 
     /* Lado direito agora é direto — contratos e gauge são filhos do res-hero */
@@ -1105,7 +1106,7 @@ header {
     }
 
     .hero-title {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-size: clamp(1.8rem, 4vw, 2.8rem); /* #_Alterar_TITULO CRIPTOMOEDA — ex: clamp(1.2rem, 3vw, 2rem) */
       font-weight: 800;
       line-height: 1;
       background: linear-gradient(135deg, #a78bfa, #6c5ce7, #38bdf8, #a78bfa);
@@ -1116,17 +1117,11 @@ header {
       animation: gradShift 5s ease infinite;
     }
 
-    /* Descrição do projeto — alinhada à esquerda sem padding artificial */
     .res-hero-desc {
-      font-size: 13px;
+      font-size: 13px; /* #_Alterar_Tamanho Fonte Descrição — ex: 11px, 12px, 14px */
       color: var(--res-text-muted);
       line-height: 1.6;
-      max-height: 58px;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      max-width: 450px; /* #_Alterar largura da DESCRIÇÃO dentro do card INF */
+      max-width: 450px;
     }
 
     /* Links: ticker, rank, redes sociais */
@@ -1298,6 +1293,8 @@ header {
       padding: 10px 20px;
       overflow-x: auto;
       scrollbar-width: none;
+      max-width: 1200px;      /* centraliza igual ao hero */
+      margin: 0 auto;
     }
     .res-sticky-metrics::-webkit-scrollbar { display: none; }
 
@@ -1355,7 +1352,8 @@ header {
 
     /* Barra de fórmula dentro do sticky */
     #stat-formula {
-      margin: 0 20px 8px;
+      max-width: 1200px;
+      margin: 0 auto 8px;
       padding: 7px 12px;
       background: rgba(108, 92, 231, 0.06);
       border: 1px solid rgba(108, 92, 231, 0.18);
@@ -1598,19 +1596,32 @@ header {
        ══════════════════════════════════════════════════════════════ */
     .gauge-card { }
 
-    /* SVG do gauge — menor para caber compacto */
-    #gauge-svg { width: 100%; max-width: 180px; display: block; margin: 0 auto; } /* #_Alterar largura do SVG do card ESTÁGIO */
-
-    /* Gauge card compacto: SVG + info + legenda em linha */
-    .gauge-card .gauge-info { text-align: center; padding: 2px 0 6px; }
-    .gauge-val { font-size: 15px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; }
+    .gauge-card .gauge-body {
+      display: flex;
+      align-items: center;
+      gap: 18px; /* #_Alterar_Espaçamento Legenda do Gráfico — ex: 10px, 24px */
+    }
+    .gauge-card .gauge-left {
+      flex: 1;
+      min-width: 0;
+    }
+    #gauge-svg { width: 100%; display: block; } /* #_Alterar_Tamanho Gráfico — aumente o card ESTÁGIO nas variáveis do hero */
+    .gauge-card .gauge-info { text-align: center; padding: 4px 0 0; }
+    .gauge-val { font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; } /* #_Alterar_Valor Market Cap Gráfico — ex: 10px, 14px */
     .gauge-cat-name { font-size: 10px; font-weight: 600; font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; color: var(--res-text-muted); margin-top: 2px; transition: color 0.4s ease; }
-    .gauge-card .stages { display: flex; flex-direction: column; gap: 2px; padding-top: 4px; }
+
+    /* Legenda ao lado do SVG */
+    .gauge-card .stages {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex-shrink: 0;
+    }
     .gauge-card .stage { display: flex; align-items: center; gap: 5px; padding: 3px 6px; border-radius: 8px; cursor: default; transition: background 0.2s; }
     .gauge-card .stage.active { background: rgba(108,92,231,0.18); }
     .stage-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .stage-name { font-size: 11px; font-weight: 500; color: var(--res-text-muted); }
-    .stage-range{ font-size: 10px; color: var(--res-text-dim); margin-left: auto; }
+    .stage-name { font-size: 11px; font-weight: 500; color: var(--res-text-muted); white-space: nowrap; }
+    .stage-range{ font-size: 9px; color: var(--res-text-dim); margin-left: auto; white-space: nowrap; }
 
     /*
       AGULHA — animação via CSS transform (não atributo SVG).
@@ -1942,51 +1953,54 @@ header {
 
       </div>
 
-      <!-- ── DIREITA: Contratos + Gauge lado a lado ────────────── -->
-      <div class="res-hero-right">
 
-        <!-- Card Contratos -->
-        <div class="card contracts-card">
-          <div class="card-label">🔗 Contratos</div>
-          <div class="contract-select-wrap">
-            <select class="contract-select" id="contract-select"
-                    onchange="showContract(this.value)"></select>
-            <span class="contract-arrow">▼</span>
+      <!-- Card Contratos — filho direto do grid .res-hero (coluna 2) -->
+      <div class="card contracts-card">
+        <div class="card-label">🔗 Contratos</div>
+        <div class="contract-select-wrap">
+          <select class="contract-select" id="contract-select"
+                  onchange="showContract(this.value)"></select>
+          <span class="contract-arrow">▼</span>
+        </div>
+        <div class="contract-box">
+          <div class="contract-net" id="contract-net">—</div>
+          <div class="contract-addr-row">
+            <div class="contract-addr" id="contract-addr">—</div>
+            <button class="copy-btn" onclick="copyAddr()" title="Copiar endereço">⧉</button>
           </div>
-          <div class="contract-box">
-            <div class="contract-net" id="contract-net">—</div>
-            <div class="contract-addr-row">
-              <div class="contract-addr" id="contract-addr">—</div>
-              <button class="copy-btn" onclick="copyAddr()" title="Copiar endereço">⧉</button>
+        </div>
+      </div>
+
+      <!-- Card Gauge — filho direto do grid .res-hero (coluna 3) -->
+      <div class="card gauge-card">
+        <div class="card-label">🏷️ ESTÁGIO DO MARKET CAP</div>
+        <div class="gauge-body">
+          <!-- Esquerda: SVG + valor -->
+          <div class="gauge-left">
+            <svg id="gauge-svg" viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg">
+              <path id="gauge-bg-track" fill="#151530"/>
+              <g id="gauge-segments"></g>
+              <g id="gauge-ticks"></g>
+              <g id="needle-translate" transform="translate(150, 172)">
+                <g id="needle-rotate">
+                  <polygon points="-12,4  112,2  -12,7" fill="rgba(0,0,0,0.45)"/>
+                  <polygon points="-12,-3.5  112,0  -12,3.5" fill="#dcdcf0"/>
+                </g>
+                <circle r="13"  fill="#0d0d22"/>
+                <circle r="9"   fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="2"/>
+                <circle r="5.5" fill="#c8c8e8"/>
+              </g>
+            </svg>
+            <div class="gauge-info">
+              <div class="gauge-val"      id="gauge-val">—</div>
+              <div class="gauge-cat-name" id="gauge-cat-name">—</div>
             </div>
           </div>
-        </div>
-
-        <!-- Card Gauge -->
-        <div class="card gauge-card">
-          <div class="card-label">🏷️ ESTÁGIO DO MARKET CAP</div>
-          <svg id="gauge-svg" viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg">
-            <path id="gauge-bg-track" fill="#151530"/>
-            <g id="gauge-segments"></g>
-            <g id="gauge-ticks"></g>
-            <g id="needle-translate" transform="translate(150, 172)">
-              <g id="needle-rotate">
-                <polygon points="-12,4  112,2  -12,7" fill="rgba(0,0,0,0.45)"/>
-                <polygon points="-12,-3.5  112,0  -12,3.5" fill="#dcdcf0"/>
-              </g>
-              <circle r="13"  fill="#0d0d22"/>
-              <circle r="9"   fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="2"/>
-              <circle r="5.5" fill="#c8c8e8"/>
-            </g>
-          </svg>
-          <div class="gauge-info">
-            <div class="gauge-val"      id="gauge-val">—</div>
-            <div class="gauge-cat-name" id="gauge-cat-name">—</div>
-          </div>
+          <!-- Direita: legenda -->
           <div class="stages" id="gauge-stages"></div>
         </div>
-
       </div>
+
     </div>
     <!-- FIM .res-hero -->
 
@@ -3047,9 +3061,15 @@ header {
         tvl: tvlValue,
         description: (function() {
           var desc = cgData.description || {};
-          /* Tenta português do Brasil primeiro, depois inglês */
           var text = desc['pt'] || desc['pt-br'] || desc['en'] || '';
-          return text.replace(/<[^>]+>/g, '').substring(0, 300);
+          text = text.replace(/<[^>]+>/g, ''); /* remove HTML tags */
+          /* Corta no final de uma frase completa (ponto final) dentro de 400 chars
+             Isso evita palavras cortadas no meio como "cu" de "currency" */
+          if (text.length > 400) {
+            var cut = text.substring(0, 400).lastIndexOf('.');
+            text = cut > 100 ? text.substring(0, cut + 1) : text.substring(0, 400);
+          }
+          return text;
         })(),
         website:  links.homepage   ? (links.homepage[0]  || null) : null,
         twitter:  twitterHandle    ? 'https://twitter.com/'+twitterHandle  : null,
