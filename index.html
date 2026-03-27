@@ -1053,18 +1053,71 @@ header {
        PÁGINA DE RESULTADO — novo layout
        ══════════════════════════════════════════════════════════════ */
 
-    /* ── HERO: 3 cards independentes ────────────────────────────────
-       Cada card tem largura própria em px.
-       Regra: a soma dos 3 + gaps (12px × 2 = 24px) + padding (32px)
-       NÃO pode ultrapassar a largura da tela.
-       Ex tela 1200px: 500 + 280 + 300 + 24 + 32 = 1136px ✅
+    /* ════════════════════════════════════════════════════════════════
+       ██████████████████████████████████████████████████████████████
+       ██                                                          ██
+       ██   PAINEL DE CONFIGURAÇÃO — PÁGINA DE RESULTADO          ██
+       ██   Edite aqui sem precisar caçar no resto do código      ██
+       ██                                                          ██
+       ██████████████████████████████████████████████████████████████
 
-       ↓↓↓ AJUSTE AQUI — valores independentes em px ↓↓↓        */
+       Como usar:
+       • Altere o valor à direita do :
+       • Salve e veja o resultado
+       • Tamanhos em px (pixels) ou rem (relativo à fonte base = 16px)
+       • Cores em hex (#) ou nome (red, blue...)
+    ════════════════════════════════════════════════════════════════ */
+    :root {
+
+      /* ── LARGURAS DOS 3 CARDS DO TOPO ─────────────────────────
+         Soma + gaps (12px×2) + padding (32px) não pode > tela
+         Ex 1200px: 500 + 280 + 300 + 24 + 32 = 1136px ✅        */
+      --col-inf:      500px;   /* Largura card INF (esquerda)      */
+      --col-contrato: 280px;   /* Largura card CONTRATOS (meio)    */
+      --col-estagio:  300px;   /* Largura card ESTÁGIO (direita)   */
+
+      /* ── CARD INF — NOME DA CRIPTOMOEDA ──────────────────────── */
+      --inf-titulo-tamanho:    clamp(1.8rem, 4vw, 2.8rem); /* Tamanho do título (Ethereum, Bitcoin...) */
+      --inf-titulo-peso:       800;                         /* Espessura: 400=normal 700=bold 800=extrabold */
+
+      /* ── CARD INF — DESCRIÇÃO ────────────────────────────────── */
+      --inf-desc-tamanho:      13px;   /* Tamanho da fonte da descrição */
+      --inf-desc-altura-linha: 1.6;    /* Espaçamento entre linhas (line-height) */
+      --inf-desc-largura-max:  450px;  /* Largura máxima do bloco de descrição */
+      --inf-desc-cor:          #5a5a8a; /* Cor do texto da descrição */
+
+      /* ── CARD INF — LINKS (ETH, #2, Website...) ──────────────── */
+      --inf-link-tamanho:      12px;   /* Tamanho da fonte dos badges de link */
+      --inf-link-padding-v:    4px;    /* Padding vertical dos badges */
+      --inf-link-padding-h:    13px;   /* Padding horizontal dos badges */
+      --inf-link-gap:          7px;    /* Espaço entre os badges */
+
+      /* ── CARD INF — LINHA DE ATUALIZAÇÃO ────────────────────── */
+      --inf-update-tamanho:    11px;   /* Tamanho da fonte "Atualizado em..." */
+
+      /* ── CARD ESTÁGIO — GRÁFICO ──────────────────────────────── */
+      --gauge-gap-legenda:     18px;   /* Espaço entre o gráfico e a legenda (desktop) */
+      --gauge-gap-legenda-mob: 12px;   /* Espaço entre o gráfico e a legenda (mobile) — #_Alterar_Espaçamento Legenda Mobile */
+      --gauge-valor-tamanho:   12px;   /* Tamanho do valor (ex: US$ 249B) abaixo do gauge */
+      --gauge-legenda-tamanho: 11px;   /* Tamanho da fonte da legenda (Gema, Pequena...) */
+      --gauge-legenda-range-tamanho: 9px; /* Tamanho do range (<$10M, $10M-$1B...) */
+
+      /* ── MENU STICKY — ESTATÍSTICAS ─────────────────────────── */
+      --sticky-lbl-tamanho:    9px;    /* Tamanho do label (PREÇO, MCAP...) */
+      --sticky-val-tamanho:    13px;   /* Tamanho do valor numérico */
+      --sticky-padding-v:      10px;   /* Padding vertical da barra */
+      --sticky-padding-h:      20px;   /* Padding horizontal da barra */
+      --sticky-metric-gap:     14px;   /* Espaço entre cada métrica */
+    }
+
+    /* ════════════════════════════════════════════════════════════════
+       FIM DO PAINEL DE CONFIGURAÇÃO
+       O restante do código aplica as variáveis acima.
+       Alterações abaixo desta linha são para ajustes avançados.
+    ════════════════════════════════════════════════════════════════ */
+
+    /* ── HERO: 3 cards independentes ── */
     .res-hero {
-      --col-inf:      500px;  /* #_Largura card INF       */
-      --col-contrato: 280px;  /* #_Largura card CONTRATOS */
-      --col-estagio:  300px;  /* #_Largura card ESTÁGIO   */
-
       display: grid;
       grid-template-columns: var(--col-inf) var(--col-contrato) var(--col-estagio);
       column-gap: 12px;
@@ -1075,9 +1128,12 @@ header {
       align-items: start;
     }
 
-    /* Mobile: empilha em coluna única */
+    /* Mobile: empilha em coluna única com espaçamento */
     @media (max-width: 900px) {
-      .res-hero { grid-template-columns: 1fr; }
+      .res-hero {
+        grid-template-columns: 1fr;
+        row-gap: 16px; /* espaço entre os cards empilhados no mobile */
+      }
     }
 
     /* Lado esquerdo */
@@ -1085,10 +1141,9 @@ header {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      justify-content: center; /* centraliza verticalmente em relação aos outros cards */
+      justify-content: center;
     }
 
-    /* Lado direito agora é direto — contratos e gauge são filhos do res-hero */
     .res-hero-right { display: contents; }
 
     .res-hero-name-row {
@@ -1105,9 +1160,10 @@ header {
       flex-shrink: 0;
     }
 
+    /* ── CARD INF: NOME ── */
     .hero-title {
-      font-size: clamp(1.8rem, 4vw, 2.8rem); /* #_Alterar_TITULO CRIPTOMOEDA — ex: clamp(1.2rem, 3vw, 2rem) */
-      font-weight: 800;
+      font-size: var(--inf-titulo-tamanho);
+      font-weight: var(--inf-titulo-peso);
       line-height: 1;
       background: linear-gradient(135deg, #a78bfa, #6c5ce7, #38bdf8, #a78bfa);
       background-size: 300% 300%;
@@ -1117,28 +1173,29 @@ header {
       animation: gradShift 5s ease infinite;
     }
 
+    /* ── CARD INF: DESCRIÇÃO ── */
     .res-hero-desc {
-      font-size: 13px; /* #_Alterar_Tamanho Fonte Descrição — ex: 11px, 12px, 14px */
-      color: var(--res-text-muted);
-      line-height: 1.6;
-      max-width: 450px;
+      font-size: var(--inf-desc-tamanho);
+      color: var(--inf-desc-cor);
+      line-height: var(--inf-desc-altura-linha);
+      max-width: var(--inf-desc-largura-max);
     }
 
-    /* Links: ticker, rank, redes sociais */
+    /* ── CARD INF: LINKS ── */
     .hero-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: var(--inf-link-gap);
     }
     .hero-link {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 12px;
+      font-size: var(--inf-link-tamanho);
       font-weight: 500;
       color: var(--res-text-muted);
       text-decoration: none;
-      padding: 4px 13px;
+      padding: var(--inf-link-padding-v) var(--inf-link-padding-h);
       background: var(--res-bg-card);
       border: 1px solid var(--res-border);
       border-radius: 999px;
@@ -1151,12 +1208,12 @@ header {
       background: var(--res-violet-soft);
     }
 
-    /* Linha de atualização — sem padding, alinhada à esquerda */
+    /* ── CARD INF: ATUALIZAÇÃO ── */
     .res-update-row {
       display: flex;
       align-items: center;
       gap: 7px;
-      font-size: 11px;
+      font-size: var(--inf-update-tamanho);
       color: var(--res-text-dim);
       flex-wrap: wrap;
     }
@@ -1184,9 +1241,6 @@ header {
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
-      align-self: flex-start;
-      margin-left: 70px;
-      margin-top: 4px;
     }
     .btn-back:hover {
       border-color: var(--res-violet);
@@ -1323,7 +1377,7 @@ header {
       flex-shrink: 0;
     }
     .sticky-metric {
-      padding: 0 14px;
+      padding: 0 var(--sticky-metric-gap);
       flex-shrink: 0;
       cursor: help;
       transition: background 0.15s;
@@ -1331,7 +1385,7 @@ header {
     }
     .sticky-metric:hover { background: rgba(108,92,231,0.08); }
     .sticky-lbl {
-      font-size: 9px;
+      font-size: var(--sticky-lbl-tamanho);
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -1339,7 +1393,7 @@ header {
       white-space: nowrap;
     }
     .sticky-val {
-      font-size: 13px;
+      font-size: var(--sticky-val-tamanho);
       font-weight: 600;
       color: var(--res-text-muted);
       white-space: nowrap;
@@ -1596,32 +1650,60 @@ header {
        ══════════════════════════════════════════════════════════════ */
     .gauge-card { }
 
-    .gauge-card .gauge-body {
-      display: flex;
-      align-items: center;
-      gap: 18px; /* #_Alterar_Espaçamento Legenda do Gráfico — ex: 10px, 24px */
-    }
-    .gauge-card .gauge-left {
-      flex: 1;
-      min-width: 0;
-    }
-    #gauge-svg { width: 100%; display: block; } /* #_Alterar_Tamanho Gráfico — aumente o card ESTÁGIO nas variáveis do hero */
-    .gauge-card .gauge-info { text-align: center; padding: 4px 0 0; }
-    .gauge-val { font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; } /* #_Alterar_Valor Market Cap Gráfico — ex: 10px, 14px */
-    .gauge-cat-name { font-size: 10px; font-weight: 600; font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; color: var(--res-text-muted); margin-top: 2px; transition: color 0.4s ease; }
+    .gauge-card .gauge-body { display: flex; align-items: center; gap: var(--gauge-gap-legenda); }
+    .gauge-card .gauge-left { flex: 1; min-width: 0; }
 
-    /* Legenda ao lado do SVG */
-    .gauge-card .stages {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      flex-shrink: 0;
+    /* Mobile: velocímetro em cima, legenda embaixo */
+    @media (max-width: 768px) {
+      .gauge-card .gauge-body {
+        flex-direction: column;      /* empilha verticalmente */
+        align-items: stretch;
+        gap: var(--gauge-gap-legenda-mob);
+      }
+      .gauge-card .gauge-left {
+        width: 100%;
+      }
+      .gauge-card .stages {
+        flex-direction: row;         /* legenda em linha horizontal no mobile */
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        justify-content: center;
+      }
+      .stage-range { display: none; } /* esconde o range no mobile para economizar espaço */
     }
+    #gauge-svg { width: 100%; display: block; }
+    .gauge-card .gauge-info { text-align: center; padding: 4px 0 0; }
+    .gauge-val { font-size: var(--gauge-valor-tamanho); font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; }
+    .gauge-cat-name { font-size: 10px; font-weight: 600; font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; color: var(--res-text-muted); margin-top: 2px; transition: color 0.4s ease; }
+    .gauge-card .stages { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
     .gauge-card .stage { display: flex; align-items: center; gap: 5px; padding: 3px 6px; border-radius: 8px; cursor: default; transition: background 0.2s; }
     .gauge-card .stage.active { background: rgba(108,92,231,0.18); }
     .stage-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .stage-name { font-size: 11px; font-weight: 500; color: var(--res-text-muted); white-space: nowrap; }
-    .stage-range{ font-size: 9px; color: var(--res-text-dim); margin-left: auto; white-space: nowrap; }
+    .stage-name { font-size: var(--gauge-legenda-tamanho); font-weight: 500; color: var(--res-text-muted); white-space: nowrap; }
+    .stage-range{ font-size: var(--gauge-legenda-range-tamanho); color: var(--res-text-dim); margin-left: auto; white-space: nowrap; }
+
+    /* ── MOBILE: sticky em grade 2 colunas ──
+       No mobile o menu sticky não arrasta — exibe em linhas de 2 métricas */
+    @media (max-width: 768px) {
+      .res-sticky-metrics {
+        flex-wrap: wrap;
+        gap: 0;
+      }
+      .sticky-metric {
+        width: 50%;           /* 2 métricas por linha */
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--res-border);
+      }
+      .sticky-metric:nth-child(even) {
+        border-left: 1px solid var(--res-border);
+      }
+      .sticky-sep { display: none; } /* esconde os separadores verticais */
+      .sticky-coin {
+        width: 100%;          /* nome da moeda ocupa linha inteira */
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--res-border);
+      }
+    }
 
     /*
       AGULHA — animação via CSS transform (não atributo SVG).
