@@ -1061,9 +1061,9 @@ header {
 
        ↓↓↓ AJUSTE AQUI — valores independentes em px ↓↓↓        */
     .res-hero {
-      --col-inf:      500px;  /* #_Largura card INF       */
-      --col-contrato: 100px;  /* #_Largura card CONTRATOS */
-      --col-estagio:  150px;  /* #_Largura card ESTÁGIO   */
+      --col-inf:      100px;  /* #_Largura card INF       */
+      --col-contrato: 150px;  /* #_Largura card CONTRATOS */
+      --col-estagio:  50px;  /* #_Largura card ESTÁGIO   */
 
       display: grid;
       grid-template-columns: var(--col-inf) var(--col-contrato) var(--col-estagio);
@@ -1396,7 +1396,7 @@ header {
        Exibe uma lista de redes/contratos no combobox.
        Ao selecionar a rede, o endereço aparece abaixo com botão copiar.
        ══════════════════════════════════════════════════════════════ */
-    .contracts-card { grid-column: 1; }
+    .contracts-card { }
 
     .contract-select-wrap { position: relative; margin-bottom: 14px; }
 
@@ -1596,7 +1596,7 @@ header {
          Mude as constantes CX, CY, R_OUT, R_IN na função buildGaugeSVG()
          no bloco de scripts abaixo.
        ══════════════════════════════════════════════════════════════ */
-    .gauge-card { grid-column: 3; }
+    .gauge-card { }
 
     /* SVG do gauge — menor para caber compacto */
     #gauge-svg { width: 100%; max-width: 180px; display: block; margin: 0 auto; } /* #_Alterar largura do SVG do card ESTÁGIO */
