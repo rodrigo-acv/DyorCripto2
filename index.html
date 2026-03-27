@@ -1053,16 +1053,28 @@ header {
        PÁGINA DE RESULTADO — novo layout
        ══════════════════════════════════════════════════════════════ */
 
-    /* ── HERO: 3 colunas — info | contratos | gauge ── */
+    /* ── HERO: 3 colunas em percentual ──────────────────────────────
+       ↓↓↓ AJUSTE AQUI — soma tem que ser 100% ↓↓↓          */
     .res-hero {
+      --col-inf:      42%;   /* #_Largura card INF       */
+      --col-contrato: 26%;   /* #_Largura card CONTRATOS */
+      --col-estagio:  32%;   /* #_Largura card ESTÁGIO   */
+      /* ↑↑↑ Soma = 100% ↑↑↑                             */
+
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 230px 240px;
-      gap: 14px;
+      grid-template-columns: var(--col-inf) var(--col-contrato) var(--col-estagio);
+      gap: 0;          /* sem gap — os % já incluem o espaço */
+      column-gap: 12px;
       max-width: 1200px;
-      margin: 0 auto 0;
-      padding: 20px 20px 20px;
+      margin: 0 auto;
+      padding: 20px 16px 16px;
       animation: fadeUp 0.4s ease both;
       align-items: start;
+    }
+
+    /* Mobile: empilha em coluna única */
+    @media (max-width: 900px) {
+      .res-hero { grid-template-columns: 1fr; }
     }
 
     /* Lado esquerdo */
@@ -1111,6 +1123,7 @@ header {
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
+      max-width: 450px; /* #_Alterar largura da DESCRIÇÃO dentro do card INF */
     }
 
     /* Links: ticker, rank, redes sociais */
@@ -1583,26 +1596,18 @@ header {
     .gauge-card { grid-column: 3; }
 
     /* SVG do gauge — menor para caber compacto */
-    #gauge-svg { width: 100%; max-width: 220px; display: block; margin: 0 auto; }
+    #gauge-svg { width: 100%; max-width: 180px; display: block; margin: 0 auto; } /* #_Alterar largura do SVG do card ESTÁGIO */
 
     /* Gauge card compacto: SVG + info + legenda em linha */
     .gauge-card .gauge-info { text-align: center; padding: 2px 0 6px; }
-    .gauge-card .stages {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 10px;
-      justify-content: center;
-    }
-    .gauge-card .stage {
-      display: flex; align-items: center; gap: 5px;
-      padding: 3px 8px;
-      border-radius: 8px;
-      cursor: default;
-      transition: background 0.2s;
-    }
-    .gauge-card .stage.active {
-      background: rgba(108,92,231,0.18);
-    }
+    .gauge-val { font-size: 15px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; }
+    .gauge-cat-name { font-size: 10px; font-weight: 600; font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; color: var(--res-text-muted); margin-top: 2px; transition: color 0.4s ease; }
+    .gauge-card .stages { display: flex; flex-direction: column; gap: 2px; padding-top: 4px; }
+    .gauge-card .stage { display: flex; align-items: center; gap: 5px; padding: 3px 6px; border-radius: 8px; cursor: default; transition: background 0.2s; }
+    .gauge-card .stage.active { background: rgba(108,92,231,0.18); }
+    .stage-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .stage-name { font-size: 11px; font-weight: 500; color: var(--res-text-muted); }
+    .stage-range{ font-size: 10px; color: var(--res-text-dim); margin-left: auto; }
 
     /*
       AGULHA — animação via CSS transform (não atributo SVG).
@@ -1907,22 +1912,22 @@ header {
       <div class="res-hero-left">
 
         <!-- Logo + Nome + Botão Refresh (fix 4: refresh junto ao nome) -->
-        <!-- Logo + Nome + Refresh + Nova Pesquisa — tudo na mesma linha -->
+        <!-- Logo + Nome + Refresh + Nova Pesquisa — tudo na mesma linha, alinhados à esquerda -->
         <div class="res-hero-name-row">
           <img id="hero-logo" class="hero-logo" src="" alt="" onerror="this.style.display='none'"/>
           <h1 class="hero-title" id="hero-title">—</h1>
-          <button class="btn-refresh" id="btn-refresh" onclick="refreshData()" title="Atualizar dados agora" style="margin-left:auto;flex-shrink:0">
+          <button class="btn-refresh" id="btn-refresh" onclick="refreshData()" title="Atualizar dados agora" style="flex-shrink:0">
             <span class="btn-refresh-icon" id="refresh-icon">↻</span>
             <span id="refresh-countdown">3:00</span>
           </button>
           <button class="btn-back" onclick="goBack()" style="flex-shrink:0">← Voltar</button>
         </div>
 
-        <!-- Descrição do projeto -->
-        <div class="res-hero-desc" id="hero-desc">—</div>
-
-        <!-- Links: ticker, posição, redes sociais -->
-        <div class="hero-links" id="hero-links"></div>
+        <!-- Descrição + Links agrupados — largura máxima de 450px -->
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:450px">
+          <div class="res-hero-desc" id="hero-desc">—</div>
+          <div class="hero-links" id="hero-links"></div>
+        </div>
 
         <!-- Linha de atualização + fonte -->
         <div class="res-update-row">
