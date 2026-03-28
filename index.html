@@ -1074,16 +1074,16 @@ header {
          Ex 1200px: 500 + 280 + 300 + 24 + 32 = 1136px ✅        */
       --col-inf:      500px;   /* Largura card INF (esquerda)      */
       --col-contrato: 280px;   /* Largura card CONTRATOS (meio)    */
-      --col-estagio:  300px;   /* Largura card ESTÁGIO (direita)   */
+      --col-estagio:  350px;   /* Largura card ESTÁGIO (direita) - interfere tamanho gauge/gráfico  */
 
       /* ── CARD INF — NOME DA CRIPTOMOEDA ──────────────────────── */
       --inf-titulo-tamanho:    clamp(1.8rem, 4vw, 2.8rem); /* Tamanho do título (Ethereum, Bitcoin...) */
       --inf-titulo-peso:       800;                         /* Espessura: 400=normal 700=bold 800=extrabold */
 
       /* ── CARD INF — DESCRIÇÃO ────────────────────────────────── */
-      --inf-desc-tamanho:      13px;   /* Tamanho da fonte da descrição */
+      --inf-desc-tamanho:      14x;   /* Tamanho da fonte da descrição */
       --inf-desc-altura-linha: 1.6;    /* Espaçamento entre linhas (line-height) */
-      --inf-desc-largura-max:  450px;  /* Largura máxima do bloco de descrição */
+      --inf-desc-largura-max:  480px;  /* Largura máxima do bloco de descrição */
       --inf-desc-cor:          #5a5a8a; /* Cor do texto da descrição */
 
       /* ── CARD INF — LINKS (ETH, #2, Website...) ──────────────── */
@@ -1097,17 +1097,67 @@ header {
 
       /* ── CARD ESTÁGIO — GRÁFICO ──────────────────────────────── */
       --gauge-gap-legenda:     18px;   /* Espaço entre o gráfico e a legenda (desktop) */
-      --gauge-gap-legenda-mob: 12px;   /* Espaço entre o gráfico e a legenda (mobile) — #_Alterar_Espaçamento Legenda Mobile */
-      --gauge-valor-tamanho:   12px;   /* Tamanho do valor (ex: US$ 249B) abaixo do gauge */
-      --gauge-legenda-tamanho: 11px;   /* Tamanho da fonte da legenda (Gema, Pequena...) */
-      --gauge-legenda-range-tamanho: 9px; /* Tamanho do range (<$10M, $10M-$1B...) */
+      --gauge-gap-legenda-mob: 12px;   /* Espaço entre o gráfico e a legenda (mobile) */
+
+      /* Valor do Market Cap (ex: US$ 1.32 T) */
+      --gauge-valor-tamanho:   10px;   /* Tamanho da fonte do valor */
+      --gauge-valor-peso:      700;    /* Espessura: 400=normal 700=bold */
+      /* Nota: a COR do valor muda automaticamente com o estágio (vermelho=Gema, azul=Mega Cap) */
+
+      /* Subtítulo do estágio (ex: Mega Cap, Blue Chip) */
+      --gauge-subtitulo-tamanho: 09px;   /* Tamanho da fonte do subtítulo */
+      --gauge-subtitulo-peso:    600;    /* Espessura */
+      --gauge-subtitulo-cor:     #5a5a8a; /* Cor do subtítulo */
+
+      /* Legenda (Gema, Pequena, Média...) */
+      --gauge-legenda-tamanho:       11px;   /* Tamanho do nome do estágio */
+      --gauge-legenda-range-tamanho: 10px;    /* Tamanho do range (<$10M, $10B-$200B...) */
+      --gauge-legenda-cor:           #5a5a8a; /* Cor dos itens normais da legenda */
+      --gauge-legenda-range-cor:     #3a3a60; /* Cor dos ranges normais */
+      --gauge-legenda-ativo-cor:     #d0d0f0; /* Cor do item ativo (estágio atual) */
 
       /* ── MENU STICKY — ESTATÍSTICAS ─────────────────────────── */
       --sticky-lbl-tamanho:    9px;    /* Tamanho do label (PREÇO, MCAP...) */
       --sticky-val-tamanho:    13px;   /* Tamanho do valor numérico */
-      --sticky-padding-v:      10px;   /* Padding vertical da barra */
-      --sticky-padding-h:      20px;   /* Padding horizontal da barra */
+      --sticky-padding-v:      10px;   /* Padding vertical da barra de métricas */
+      --sticky-padding-h:      20px;   /* Padding horizontal da barra de métricas */
       --sticky-metric-gap:     14px;   /* Espaço entre cada métrica */
+      --sticky-formula-gap:    0px;    /* Espaço entre as métricas e a barra ƒ (0 = colado) */
+
+      /* ── MENU STICKY — COR POR MÉTRICA ──────────────────────────
+         Cada métrica tem sua própria cor de valor.
+         Use qualquer cor hex (#rrggbb) ou nome CSS (white, red...)  */
+      --sticky-cor-nome:       #ffffff;  /* Cor do nome da moeda (Ethereum) */
+      --sticky-cor-preco:      #d0d0f0;  /* Cor do Preço */
+      --sticky-cor-mcap:       #a78bfa;  /* Cor do Market Cap (roxo) */
+      --sticky-cor-fdv:        #d0d0f0;  /* Cor do FDV */
+      --sticky-cor-supply:     #d0d0f0;  /* Cor do Circ. Supply */
+      --sticky-cor-total:      #d0d0f0;  /* Cor do Total/Max Supply */
+      --sticky-cor-lib:        #34d399;  /* Cor do % Liberado (verde) */
+      --sticky-cor-locked:     #fbbf24;  /* Cor do % Bloqueado (âmbar) */
+      --sticky-cor-vol24:      #34d399;  /* Cor do Vol 24h (muda dinamicamente) */
+      --sticky-cor-vol7:       #34d399;  /* Cor do Vol 7D (muda dinamicamente) */
+      --sticky-cor-tvl:        #a78bfa;  /* Cor do TVL (roxo) */
+
+      /* ── BARRA DE FÓRMULA ƒ ──────────────────────────────────────
+         A barra que aparece abaixo do menu sticky ao passar o mouse  */
+      --formula-largura-max:   1000px;  /* Largura máxima da barra */
+      --formula-alinhamento:   left;    /* Alinhamento do texto: left | center | right */
+      --formula-margin-bottom: 8px;     /* Espaço abaixo da barra */
+      --formula-padding-v:     7px;     /* Padding vertical (altura interna) */
+      --formula-padding-h:     0px;    /* Padding horizontal (recuo lateral)  - 12px*/
+      --formula-gap:           6px;     /* Espaço entre o ƒ e o texto */
+      --formula-fonte:         11px;    /* Tamanho da fonte */
+      --formula-cor-texto:     #5a5a8a; /* Cor do texto (inativo) */
+      --formula-cor-ativo:     #9090c0; /* Cor do texto (card ativo) */
+      --formula-cor-simbolo:   rgba(108, 92, 231, 0.4); /* Cor do símbolo ƒ */
+      --formula-simbolo-tam:   13px;    /* Tamanho do símbolo ƒ */
+      
+      /* Moldura — para tirar: borda-largura: 0px e fundo: transparent */
+      --formula-fundo:         transparent; /* Fundo da barra - Cor: rgba(108, 92, 231, 0.06)*/
+      --formula-borda-cor:     rgba(108, 92, 231, 0.18); /* Cor da moldura */
+      --formula-borda-largura: 0px;     /* Espessura da moldura (0px = sem moldura | 1px = com moldura) */
+      --formula-borda-radius:  8px;     /* Arredondamento dos cantos */
     }
 
     /* ════════════════════════════════════════════════════════════════
@@ -1255,6 +1305,8 @@ header {
       border: 1px solid var(--res-border);
       border-radius: 999px;
       padding: 3px 12px;
+      min-width: 80px;        /* evita que o botão mude de tamanho no countdown */
+      justify-content: center;
       font-family: 'Outfit', sans-serif;
       font-size: 11px; font-weight: 600;
       color: var(--res-text-muted);
@@ -1344,10 +1396,10 @@ header {
       display: flex;
       align-items: center;
       gap: 0;
-      padding: 10px 20px;
+      padding: var(--sticky-padding-v) var(--sticky-padding-h) 0; /* padding-bottom via --sticky-formula-gap */
       overflow-x: auto;
       scrollbar-width: none;
-      max-width: 1200px;      /* centraliza igual ao hero */
+      max-width: 1200px;
       margin: 0 auto;
     }
     .res-sticky-metrics::-webkit-scrollbar { display: none; }
@@ -1406,31 +1458,32 @@ header {
 
     /* Barra de fórmula dentro do sticky */
     #stat-formula {
-      max-width: 1200px;
-      margin: 0 auto 8px;
-      padding: 7px 12px;
-      background: rgba(108, 92, 231, 0.06);
-      border: 1px solid rgba(108, 92, 231, 0.18);
-      border-radius: 8px;
+      max-width: var(--formula-largura-max);
+      margin: var(--sticky-formula-gap) auto var(--formula-margin-bottom); /* gap acima vem do painel */
+      padding: var(--formula-padding-v) var(--formula-padding-h);
+      background: var(--formula-fundo);
+      border: var(--formula-borda-largura) solid var(--formula-borda-cor);
+      border-radius: var(--formula-borda-radius);
       font-family: 'Outfit', sans-serif;
-      font-size: 11px;
-      color: #5a5a8a;
+      font-size: var(--formula-fonte);
+      color: var(--formula-cor-texto);
+      text-align: var(--formula-alinhamento);
       line-height: 1.5;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--formula-gap);
       transition: color 0.2s, border-color 0.2s;
     }
     #stat-formula::before {
       content: 'ƒ';
-      font-size: 13px;
+      font-size: var(--formula-simbolo-tam);
       font-weight: 700;
-      color: rgba(108, 92, 231, 0.4);
+      color: var(--formula-cor-simbolo);
       flex-shrink: 0;
       font-style: italic;
     }
     #stat-formula.active {
-      color: #9090c0;
+      color: var(--formula-cor-ativo);
       border-color: rgba(108, 92, 231, 0.35);
     }
     #stat-formula-text { flex: 1; }
@@ -1587,24 +1640,22 @@ header {
     .stat-box { cursor: default; }
     .stat-box[data-tip] { cursor: help; }
 
-    /* Barra de fórmula — fica escondida até o usuário interagir */
+    /* Barra de fórmula — usa as mesmas variáveis do painel de configuração */
     #stat-formula {
       margin-top: 12px;
-      padding: 10px 14px;
-      background: rgba(108, 92, 231, 0.07);
-      border: 1px solid rgba(108, 92, 231, 0.2);
-      border-radius: 10px;
+      padding: var(--formula-padding-v) var(--formula-padding-h);
+      background: var(--formula-fundo);
+      border: var(--formula-borda-largura) solid var(--formula-borda-cor);
+      border-radius: var(--formula-borda-radius);
       font-family: 'Outfit', sans-serif;
-      font-size: 11px;
-      color: #6a6a9a;
+      font-size: var(--formula-fonte);
+      color: var(--formula-cor-texto);
       line-height: 1.6;
       min-height: 38px;
       transition: color 0.25s ease, border-color 0.25s ease;
-
-      /* Estado vazio — mostra dica discreta */
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--formula-gap);
     }
     #stat-formula::before {
       content: 'ƒ';
@@ -1673,14 +1724,16 @@ header {
     }
     #gauge-svg { width: 100%; display: block; }
     .gauge-card .gauge-info { text-align: center; padding: 4px 0 0; }
-    .gauge-val { font-size: var(--gauge-valor-tamanho); font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; }
-    .gauge-cat-name { font-size: 10px; font-weight: 600; font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; color: var(--res-text-muted); margin-top: 2px; transition: color 0.4s ease; }
+    .gauge-val { font-size: var(--gauge-valor-tamanho); font-weight: var(--gauge-valor-peso); font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; }
+    .gauge-cat-name { font-size: var(--gauge-subtitulo-tamanho); font-weight: var(--gauge-subtitulo-peso); font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; color: var(--gauge-subtitulo-cor); margin-top: 2px; transition: color 0.4s ease; }
     .gauge-card .stages { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
     .gauge-card .stage { display: flex; align-items: center; gap: 5px; padding: 3px 6px; border-radius: 8px; cursor: default; transition: background 0.2s; }
     .gauge-card .stage.active { background: rgba(108,92,231,0.18); }
     .stage-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .stage-name { font-size: var(--gauge-legenda-tamanho); font-weight: 500; color: var(--res-text-muted); white-space: nowrap; }
-    .stage-range{ font-size: var(--gauge-legenda-range-tamanho); color: var(--res-text-dim); margin-left: auto; white-space: nowrap; }
+    .stage-name { font-size: var(--gauge-legenda-tamanho); font-weight: 500; color: var(--gauge-legenda-cor); white-space: nowrap; }
+    .stage-name.active { color: var(--gauge-legenda-ativo-cor); }
+    .stage-range{ font-size: var(--gauge-legenda-range-tamanho); color: var(--gauge-legenda-range-cor); margin-left: auto; white-space: nowrap; }
+    .stage.active .stage-range { color: var(--gauge-legenda-ativo-cor); }
 
     /* ── MOBILE: sticky em grade 2 colunas ──
        No mobile o menu sticky não arrasta — exibe em linhas de 2 métricas */
@@ -2098,67 +2151,67 @@ header {
         <!-- Nome da moeda -->
         <div class="sticky-coin">
           <img id="sticky-logo" class="sticky-logo" src="" alt="" onerror="this.style.display='none'"/>
-          <span class="sticky-name" id="sticky-name">—</span>
+          <span class="sticky-name" id="sticky-name" style="color:var(--sticky-cor-nome)">—</span>
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="preco" data-tip="Preço atual de mercado.">
           <div class="sticky-lbl">Preço</div>
-          <div class="sticky-val" id="st-price">—</div>
+          <div class="sticky-val" id="st-price" style="color:var(--sticky-cor-preco)">—</div>
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="mcap" data-tip="Preço × Circ. Supply">
           <div class="sticky-lbl">Market Cap</div>
-          <div class="sticky-val violet" id="st-mcap">—</div>
+          <div class="sticky-val" id="st-mcap" style="color:var(--sticky-cor-mcap)">—</div>
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="fdv" data-tip="Preço × Total Supply">
           <div class="sticky-lbl">FDV</div>
-          <div class="sticky-val" id="st-fdv">—</div>
+          <div class="sticky-val" id="st-fdv" style="color:var(--sticky-cor-fdv)">—</div>
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="supply" data-tip="Moedas em circulação hoje.">
           <div class="sticky-lbl">Circ. Supply</div>
-          <div class="sticky-val" id="st-supply">—</div>
+          <div class="sticky-val" id="st-supply" style="color:var(--sticky-cor-supply)">—</div>
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="total" data-tip="Total Supply ou Max Supply.">
           <div class="sticky-lbl" id="st-lbl-total">Total Supply</div>
-          <div class="sticky-val" id="st-total">—</div>
+          <div class="sticky-val" id="st-total" style="color:var(--sticky-cor-total)">—</div>
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="lib" data-tip="Circ. Supply ÷ denominador × 100.">
           <div class="sticky-lbl" id="st-lbl-lib">% Liberado</div>
-          <div class="sticky-val green" id="st-lib">—</div>
+          <div class="sticky-val" id="st-lib" style="color:var(--sticky-cor-lib)">—</div>
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="locked" data-tip="100% − % Liberado.">
           <div class="sticky-lbl" id="st-lbl-locked">% Bloqueado</div>
-          <div class="sticky-val amber" id="st-locked">—</div>
+          <div class="sticky-val" id="st-locked" style="color:var(--sticky-cor-locked)">—</div>
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="vol24" data-tip="Volume 24h ÷ Market Cap.">
           <div class="sticky-lbl">Vol 24h</div>
-          <div class="sticky-val" id="st-vol24">—</div>
+          <div class="sticky-val" id="st-vol24">—</div><!-- cor dinâmica via JS (semáforo) -->
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="vol7" data-tip="Volume 7D ÷ Market Cap.">
           <div class="sticky-lbl">Vol 7D</div>
-          <div class="sticky-val" id="st-vol7">—</div>
+          <div class="sticky-val" id="st-vol7">—</div><!-- cor dinâmica via JS (semáforo) -->
         </div>
         <div class="sticky-sep"></div>
 
         <div class="sticky-metric" data-card="tvl" data-tip="Total Value Locked. Fonte: DeFiLlama.">
           <div class="sticky-lbl">TVL</div>
-          <div class="sticky-val violet" id="st-tvl">—</div>
+          <div class="sticky-val" id="st-tvl" style="color:var(--sticky-cor-tvl)">—</div>
         </div>
 
       </div>
@@ -2693,29 +2746,105 @@ header {
     setText('sticky-name', d.name);
     buildLinks(d);
 
-    /* Descrição do projeto */
+    /* Descrição do projeto — CoinGecko primário, DeFiLlama fallback */
     var descEl = document.getElementById('hero-desc');
     if (descEl) {
+
+      /*
+        descSuspeita() — detecta se a descrição da CoinGecko é sobre
+        uma entidade diferente da moeda buscada.
+
+        Sinais de suspeita:
+          • Menciona "Foundation" / "Fundação" — pode ser a org, não o token
+          • Menciona "DAO" no início — pode ser sobre a governança
+          • O nome da moeda não aparece no texto
+          • Texto muito curto (< 30 chars) ou vazio
+      */
+      function descSuspeita(text, nomeMoeda) {
+        if (!text || text.length < 30) return true;
+        var t = text.toLowerCase();
+        var nome = (nomeMoeda || '').toLowerCase();
+        /* Se menciona Foundation/Fundação antes de 120 chars → suspeito */
+        var inicio = t.substring(0, 120);
+        if (inicio.indexOf('foundation') !== -1 || inicio.indexOf('fundação') !== -1) return true;
+        /* Se o nome da moeda não aparece em lugar nenhum → suspeito */
+        if (nome.length > 2 && t.indexOf(nome) === -1) return true;
+        return false;
+      }
+
+      /*
+        buscaDescLlama() — busca descrição no DeFiLlama /protocol/{slug}
+        O slug é o coinId da CoinGecko (geralmente funciona direto).
+      */
+      function buscaDescLlama(coinId) {
+        return fetch('https://api.llama.fi/protocol/' + encodeURIComponent(coinId))
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(data) {
+            if (!data) return null;
+            var desc = data.description || '';
+            return desc.length > 30 ? desc : null;
+          })
+          .catch(function() { return null; });
+      }
+
+      /*
+        traduzDesc() — traduz via Google Translate.
+        Mostra original em opacidade 50% enquanto traduz.
+      */
+      function traduzDesc(text) {
+        var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=pt&dt=t&q='
+                  + encodeURIComponent(text);
+        return fetch(url)
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            return data[0].map(function(seg) { return seg[0]; }).join('');
+          })
+          .catch(function() { return text; }); /* se falhar, retorna original */
+      }
+
+      /*
+        Pipeline principal:
+        1. Verifica se descrição CoinGecko é suspeita
+        2. Se sim → tenta DeFiLlama
+        3. Usa a melhor disponível
+        4. Traduz para PT-BR
+      */
       if (!d.description) {
         descEl.textContent = 'Sem descrição disponível.';
+        descEl.style.opacity = '1';
       } else {
+        /* Mostra texto original imediatamente (cinza, 50%) */
         descEl.textContent = d.description;
         descEl.style.opacity = '0.5';
 
-        /* Traduz via Google Translate (endpoint público, sem chave) */
-        var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=pt&dt=t&q=' + encodeURIComponent(d.description);
-        fetch(url)
-          .then(function(r) { return r.json(); })
-          .then(function(data) {
-            /* Resposta é array de arrays — junta os fragmentos traduzidos */
-            var translated = data[0].map(function(seg) { return seg[0]; }).join('');
-            if (translated && descEl) {
-              descEl.textContent = translated;
+        var pipeline;
+        if (descSuspeita(d.description, d.name)) {
+          /* Descrição suspeita → tenta DeFiLlama primeiro */
+          pipeline = buscaDescLlama(d.id || _currentCoinId)
+            .then(function(llamaDesc) {
+              /* Se DeFiLlama tiver algo melhor, usa; senão volta para CoinGecko */
+              return llamaDesc || d.description;
+            });
+        } else {
+          /* Descrição ok → usa direto */
+          pipeline = Promise.resolve(d.description);
+        }
+
+        pipeline
+          .then(function(textoFinal) {
+            return traduzDesc(textoFinal);
+          })
+          .then(function(traduzido) {
+            if (descEl) {
+              descEl.textContent = traduzido;
               descEl.style.opacity = '1';
             }
           })
           .catch(function() {
-            if (descEl) descEl.style.opacity = '1';
+            if (descEl) {
+              descEl.textContent = d.description;
+              descEl.style.opacity = '1';
+            }
           });
       }
     }
@@ -2780,10 +2909,10 @@ header {
     var supPct = document.getElementById('s-supply-pct');
     if (supPct) supPct.textContent = d.pctFree ? d.pctFree.toFixed(1)+'% do total' : '—';
 
-    /* ── Feature 1: Total Supply → Max Supply se existir ── */
+    /* ── Total Supply → Max Supply só para PoW ── */
     var lblTotal   = document.getElementById('lbl-total');
     var stLblTotal = document.getElementById('st-lbl-total');
-    if (d.maxSupply) {
+    if (d.isPoW && d.maxSupply) {
       if (lblTotal)   lblTotal.textContent   = 'Max Supply';
       if (stLblTotal) stLblTotal.textContent = 'Max Supply';
       setText('s-total',  fmtNum(d.maxSupply));
@@ -2795,20 +2924,22 @@ header {
       setText('st-total', fmtNum(d.totalSupply));
     }
 
-    /* ── Feature 2: Labels PoW vs PoS ── */
+    /* ── Labels PoW (minerado) vs PoS/Token (liberado) ──
+       isPoW = true  → Bitcoin, Litecoin, Monero... → % Minerado / % Falta Minerar
+       isPoW = false → ETH, SOL, ARB, tokens...    → % Liberado / % Bloqueado   */
     var lblLib    = document.getElementById('lbl-lib');
     var lblLocked = document.getElementById('lbl-locked');
     var stLblLib    = document.getElementById('st-lbl-lib');
     var stLblLocked = document.getElementById('st-lbl-locked');
-    if (d.maxSupply) {
-      if (lblLib)     lblLib.textContent     = '% Minerado';
-      if (lblLocked)  lblLocked.textContent  = '% Falta Minerar';
-      if (stLblLib)   stLblLib.textContent   = '% Minerado';
+    if (d.isPoW) {
+      if (lblLib)      lblLib.textContent      = '% Minerado';
+      if (lblLocked)   lblLocked.textContent   = '% Falta Minerar';
+      if (stLblLib)    stLblLib.textContent    = '% Minerado';
       if (stLblLocked) stLblLocked.textContent = '% Falta Minerar';
     } else {
-      if (lblLib)     lblLib.textContent     = '% Liberado';
-      if (lblLocked)  lblLocked.textContent  = '% Bloqueado';
-      if (stLblLib)   stLblLib.textContent   = '% Liberado';
+      if (lblLib)      lblLib.textContent      = '% Liberado';
+      if (lblLocked)   lblLocked.textContent   = '% Bloqueado';
+      if (stLblLib)    stLblLib.textContent    = '% Liberado';
       if (stLblLocked) stLblLocked.textContent = '% Bloqueado';
     }
     setText('s-lib',    d.pctFree   != null ? d.pctFree.toFixed(2)+'%'   : '—');
@@ -2847,37 +2978,20 @@ header {
     var p   = fmtPrice(d.price); /* usa fmtPrice no tooltip também */
     var cs  = fmtNum(d.circulatingSupply);
     var ts  = fmtNum(d.totalSupply);
-    var ms  = d.maxSupply ? fmtNum(d.maxSupply) : null;
-    var den = ms || ts;  /* denominador real usado nos % */
-    var mc  = fmtUSD(d.marketCap);
-    var v24 = fmtUSD(d.volume24h);
+    var ms  = (d.isPoW && d.maxSupply) ? fmtNum(d.maxSupply) : null;
+    var den = ms || ts;
 
-    setTip('preco',
-      'Último preço de mercado.\nAtualizado em: ' + new Date().toLocaleTimeString('pt-BR'));
-
-    setTip('mcap',
-      'Preço (' + p + ') × Circ. Supply (' + cs + ')');
-
-    setTip('fdv',
-      'Preço (' + p + ') × Total Supply (' + ts + ').\nSe todo o supply fosse emitido hoje.');
-
-    setTip('vol24',
-      'Volume 24h (' + v24 + ') ÷ Market Cap (' + mc + ').\nVerde ≥3% · Âmbar ≥1% · Vermelho <1%');
-
-    setTip('supply',
-      'Moedas em circulação: ' + cs + '.\nNão inclui bloqueadas, queimadas ou não emitidas.');
-
-    /* Total card — muda conforme max_supply */
-    if (ms) {
+    /* Total card tooltip */
+    if (d.isPoW && ms) {
       setTip('total', 'Máximo de moedas que podem existir: ' + ms + '.\nCodificado no protocolo — nunca pode ser ultrapassado.');
     } else {
       setTip('total', 'Total Supply: ' + ts + '.\nCirculantes + bloqueadas (exceto queimadas).');
     }
 
-    /* % Liberado/Minerado */
-    if (ms) {
+    /* % tooltip */
+    if (d.isPoW && ms) {
       setTip('lib',    'Circ. Supply (' + cs + ') ÷ Max Supply (' + ms + ') × 100.');
-      setTip('locked', '100% − % Minerado (' + (d.pctFree ? d.pctFree.toFixed(2) : '—') + '%).\nBitcoins ainda a ser minerados até o teto de ' + ms + '.');
+      setTip('locked', '100% − % Minerado (' + (d.pctFree ? d.pctFree.toFixed(2) : '—') + '%).\nAinda a ser minerados até o teto de ' + ms + '.');
     } else {
       setTip('lib',    'Circ. Supply (' + cs + ') ÷ Total Supply (' + ts + ') × 100.');
       setTip('locked', '100% − % Liberado (' + (d.pctFree ? d.pctFree.toFixed(2) : '—') + '%).\nSupply ainda em vesting, reservas ou não emitido.');
@@ -3099,15 +3213,28 @@ header {
 
       var circ      = md.circulating_supply || null;
       var total     = md.total_supply       || null;
-      var maxSup    = md.max_supply         || null; /* ex: 21M do Bitcoin */
+      var maxSup    = md.max_supply         || null;
+
+      /*
+        isPoW — verdadeiro APENAS para coins ainda ativamente mineradas.
+        CoinGecko tem hashing_algorithm preenchido para moedas PoW,
+        MAS mantém o campo para moedas que migraram (ex: ETH = "Ethash"
+        mesmo após o Merge em set/2022).
+
+        Lista de exceções (migraram de PoW para PoS):
+          ethereum → virou PoS no Merge (set/2022)
+          ethereum-classic é PoW mas pode causar confusão — mantemos
+      */
+      var POS_EXCEPTIONS = ['ethereum'];
+      var isPoW = !!(cgData.hashing_algorithm && cgData.hashing_algorithm.trim())
+                  && POS_EXCEPTIONS.indexOf(cgData.id) === -1;
 
       /*
         Denominador para % de supply:
-        SE max_supply existe → usa ele (ex: Bitcoin 21M)
-        SE não              → usa total_supply (ETH, SOL, tokens...)
-        Isso garante que Bitcoin mostre 93.8% e não 100%.
+        SE é PoW E tem max_supply → usa max_supply (ex: Bitcoin 21M)
+        SE não                    → usa total_supply
       */
-      var denominator = maxSup || total;
+      var denominator = (isPoW && maxSup) ? maxSup : total;
       var pctFree     = (circ && denominator) ? (circ / denominator * 100) : null;
       var pctLocked   = pctFree != null ? (100 - pctFree) : null;
 
@@ -3136,8 +3263,9 @@ header {
         volume7dPct: null,
         circulatingSupply: circ,
         totalSupply:       total,
-        maxSupply:         maxSup,      /* novo campo */
-        denominator:       denominator, /* max_supply || total_supply */
+        maxSupply:         maxSup,
+        isPoW:             isPoW,       /* true = Bitcoin/Litecoin, false = tokens/PoS */
+        denominator:       denominator,
         pctFree:           pctFree,
         pctLocked:         pctLocked,
         tvl: tvlValue,
