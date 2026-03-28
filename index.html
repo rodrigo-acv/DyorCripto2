@@ -1140,7 +1140,7 @@ header {
 
       /* ── BARRA DE FÓRMULA ƒ ──────────────────────────────────────
          A barra que aparece abaixo do menu sticky ao passar o mouse  */
-      --formula-largura-max:   1200px;  /* Largura máxima da barra */
+      --formula-largura-max:   1000px;  /* Largura máxima da barra */
       --formula-alinhamento:   left;    /* Alinhamento do texto: left | center | right */
       --formula-margin-bottom: 8px;     /* Espaço abaixo da barra */
       --formula-padding-v:     7px;     /* Padding vertical (altura interna) */
@@ -1151,11 +1151,10 @@ header {
       --formula-cor-ativo:     #9090c0; /* Cor do texto (card ativo) */
       --formula-cor-simbolo:   rgba(108, 92, 231, 0.4); /* Cor do símbolo ƒ */
       --formula-simbolo-tam:   13px;    /* Tamanho do símbolo ƒ */
-
       /* Moldura — para tirar: borda-largura: 0px e fundo: transparent */
       --formula-fundo:         transparent; /* Fundo da barra - Cor: rgba(108, 92, 231, 0.06)*/
-      --formula-borda-largura: 0px;     /* Espessura da moldura (0px = sem moldura) - (Com moldura+ 1px) */
-      --formula-borda-cor:     rgba(108, 92, 231, 0.18); /* Cor da moldura - Cor: rgba(108, 92, 231, 0.18) */
+      --formula-borda-cor:     rgba(108, 92, 231, 0.18); /* Cor da moldura */
+      --formula-borda-largura: 0px;     /* Espessura da moldura (0px = sem moldura | 1px = com moldura) */
       --formula-borda-radius:  8px;     /* Arredondamento dos cantos */
     }
 
@@ -1639,24 +1638,22 @@ header {
     .stat-box { cursor: default; }
     .stat-box[data-tip] { cursor: help; }
 
-    /* Barra de fórmula — fica escondida até o usuário interagir */
+    /* Barra de fórmula — usa as mesmas variáveis do painel de configuração */
     #stat-formula {
       margin-top: 12px;
-      padding: 10px 14px;
-      background: rgba(108, 92, 231, 0.07);
-      border: 1px solid rgba(108, 92, 231, 0.2);
-      border-radius: 10px;
+      padding: var(--formula-padding-v) var(--formula-padding-h);
+      background: var(--formula-fundo);
+      border: var(--formula-borda-largura) solid var(--formula-borda-cor);
+      border-radius: var(--formula-borda-radius);
       font-family: 'Outfit', sans-serif;
-      font-size: 11px;
-      color: #6a6a9a;
+      font-size: var(--formula-fonte);
+      color: var(--formula-cor-texto);
       line-height: 1.6;
       min-height: 38px;
       transition: color 0.25s ease, border-color 0.25s ease;
-
-      /* Estado vazio — mostra dica discreta */
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--formula-gap);
     }
     #stat-formula::before {
       content: 'ƒ';
@@ -3217,17 +3214,18 @@ header {
       var maxSup    = md.max_supply         || null;
 
       /*
-        isPoW — verdadeiro APENAS para coins mineradas (Proof of Work).
-        CoinGecko retorna hashing_algorithm preenchido só para PoW:
-          Bitcoin → "SHA-256"
-          Litecoin → "Scrypt"
-          Monero → "RandomX"
-          ARB, ETH, SOL, tokens → null  ← NÃO são minerados!
+        isPoW — verdadeiro APENAS para coins ainda ativamente mineradas.
+        CoinGecko tem hashing_algorithm preenchido para moedas PoW,
+        MAS mantém o campo para moedas que migraram (ex: ETH = "Ethash"
+        mesmo após o Merge em set/2022).
 
-        Isso corrige o bug onde tokens com max_supply (como ARB)
-        apareciam como "% Minerado" erroneamente.
+        Lista de exceções (migraram de PoW para PoS):
+          ethereum → virou PoS no Merge (set/2022)
+          ethereum-classic é PoW mas pode causar confusão — mantemos
       */
-      var isPoW = !!(cgData.hashing_algorithm && cgData.hashing_algorithm.trim());
+      var POS_EXCEPTIONS = ['ethereum'];
+      var isPoW = !!(cgData.hashing_algorithm && cgData.hashing_algorithm.trim())
+                  && POS_EXCEPTIONS.indexOf(cgData.id) === -1;
 
       /*
         Denominador para % de supply:
