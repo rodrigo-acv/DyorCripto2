@@ -1077,11 +1077,11 @@ header {
       --col-estagio:  350px;   /* Largura card ESTÁGIO (direita) - interfere tamanho gauge/gráfico  */
 
       /* ── CARD INF — NOME DA CRIPTOMOEDA ──────────────────────── */
-      --inf-titulo-tamanho:    clamp(1.8rem, 4vw, 2.8rem); /* Tamanho do título (Ethereum, Bitcoin...) */
+      --inf-titulo-tamanho:    clamp(1.6rem, 4vw, 2.8rem); /* Tamanho do título (Ethereum, Bitcoin...) */
       --inf-titulo-peso:       800;                         /* Espessura: 400=normal 700=bold 800=extrabold */
 
       /* ── CARD INF — DESCRIÇÃO ────────────────────────────────── */
-      --inf-desc-tamanho:      14x;   /* Tamanho da fonte da descrição */
+      --inf-desc-tamanho:      13x;   /* Tamanho da fonte da descrição */
       --inf-desc-altura-linha: 1.6;    /* Espaçamento entre linhas (line-height) */
       --inf-desc-largura-max:  480px;  /* Largura máxima do bloco de descrição */
       --inf-desc-cor:          #5a5a8a; /* Cor do texto da descrição */
@@ -1137,6 +1137,19 @@ header {
       --sticky-cor-vol24:      #34d399;  /* Cor do Vol 24h (muda dinamicamente) */
       --sticky-cor-vol7:       #34d399;  /* Cor do Vol 7D (muda dinamicamente) */
       --sticky-cor-tvl:        #a78bfa;  /* Cor do TVL (roxo) */
+
+      /* ── BARRA DE FÓRMULA ƒ ──────────────────────────────────────
+         A barra que aparece abaixo do menu sticky ao passar o mouse  */
+      --formula-largura-max:   1200px;  /* Largura máxima da barra */
+      --formula-margin-bottom: 8px;     /* Espaço abaixo da barra (separa do conteúdo) */
+      --formula-padding-v:     7px;     /* Padding vertical (altura interna) */
+      --formula-padding-h:     50px;    /* Padding horizontal (recuo lateral) */
+      --formula-gap:           6px;     /* Espaço entre o ƒ e o texto */
+      --formula-fonte:         11px;    /* Tamanho da fonte do texto */
+      --formula-cor-texto:     #5a5a8a; /* Cor do texto (inativo) */
+      --formula-cor-ativo:     #9090c0; /* Cor do texto (quando um card está ativo) */
+      --formula-cor-simbolo:   rgba(108, 92, 231, 0.4); /* Cor do símbolo ƒ */
+      --formula-simbolo-tam:   13px;    /* Tamanho do símbolo ƒ */
     }
 
     /* ════════════════════════════════════════════════════════════════
@@ -1437,31 +1450,31 @@ header {
 
     /* Barra de fórmula dentro do sticky */
     #stat-formula {
-      max-width: 1200px;
-      margin: 0 auto 8px;
-      padding: 7px 12px;
+      max-width: var(--formula-largura-max);
+      margin: 0 auto var(--formula-margin-bottom);
+      padding: var(--formula-padding-v) var(--formula-padding-h);
       background: rgba(108, 92, 231, 0.06);
       border: 1px solid rgba(108, 92, 231, 0.18);
       border-radius: 8px;
       font-family: 'Outfit', sans-serif;
-      font-size: 11px;
-      color: #5a5a8a;
+      font-size: var(--formula-fonte);
+      color: var(--formula-cor-texto);
       line-height: 1.5;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--formula-gap);
       transition: color 0.2s, border-color 0.2s;
     }
     #stat-formula::before {
       content: 'ƒ';
-      font-size: 13px;
+      font-size: var(--formula-simbolo-tam);
       font-weight: 700;
-      color: rgba(108, 92, 231, 0.4);
+      color: var(--formula-cor-simbolo);
       flex-shrink: 0;
       font-style: italic;
     }
     #stat-formula.active {
-      color: #9090c0;
+      color: var(--formula-cor-ativo);
       border-color: rgba(108, 92, 231, 0.35);
     }
     #stat-formula-text { flex: 1; }
