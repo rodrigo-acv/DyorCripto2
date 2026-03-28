@@ -1072,18 +1072,18 @@ header {
       /* ── LARGURAS DOS 3 CARDS DO TOPO ─────────────────────────
          Soma + gaps (12px×2) + padding (32px) não pode > tela
          Ex 1200px: 500 + 280 + 300 + 24 + 32 = 1136px ✅        */
-      --col-inf:      520px;   /* Largura card INF (esquerda)    - anterior 500px  */
+      --col-inf:      500px;   /* Largura card INF (esquerda)      */
       --col-contrato: 280px;   /* Largura card CONTRATOS (meio)    */
-      --col-estagio:  300px;   /* Largura card ESTÁGIO (direita)   */
+      --col-estagio:  320px;   /* Largura card ESTÁGIO (direita) - interfere tamanho gauge/gráfico  */
 
       /* ── CARD INF — NOME DA CRIPTOMOEDA ──────────────────────── */
       --inf-titulo-tamanho:    clamp(1.8rem, 4vw, 2.8rem); /* Tamanho do título (Ethereum, Bitcoin...) */
       --inf-titulo-peso:       800;                         /* Espessura: 400=normal 700=bold 800=extrabold */
 
       /* ── CARD INF — DESCRIÇÃO ────────────────────────────────── */
-      --inf-desc-tamanho:      14px;   /* Tamanho da fonte da descrição */
+      --inf-desc-tamanho:      13px;   /* Tamanho da fonte da descrição */
       --inf-desc-altura-linha: 1.6;    /* Espaçamento entre linhas (line-height) */
-      --inf-desc-largura-max:  480px;  /* Largura máxima do bloco de descrição */
+      --inf-desc-largura-max:  450px;  /* Largura máxima do bloco de descrição */
       --inf-desc-cor:          #5a5a8a; /* Cor do texto da descrição */
 
       /* ── CARD INF — LINKS (ETH, #2, Website...) ──────────────── */
@@ -1097,10 +1097,24 @@ header {
 
       /* ── CARD ESTÁGIO — GRÁFICO ──────────────────────────────── */
       --gauge-gap-legenda:     18px;   /* Espaço entre o gráfico e a legenda (desktop) */
-      --gauge-gap-legenda-mob: 12px;   /* Espaço entre o gráfico e a legenda (mobile) — #_Alterar_Espaçamento Legenda Mobile */
-      --gauge-valor-tamanho:   12px;   /* Tamanho do valor (ex: US$ 249B) abaixo do gauge */
-      --gauge-legenda-tamanho: 11px;   /* Tamanho da fonte da legenda (Gema, Pequena...) */
-      --gauge-legenda-range-tamanho: 9px; /* Tamanho do range (<$10M, $10M-$1B...) */
+      --gauge-gap-legenda-mob: 12px;   /* Espaço entre o gráfico e a legenda (mobile) */
+
+      /* Valor do Market Cap (ex: US$ 1.32 T) */
+      --gauge-valor-tamanho:   11px;   /* Tamanho da fonte do valor */
+      --gauge-valor-peso:      700;    /* Espessura: 400=normal 700=bold */
+      /* Nota: a COR do valor muda automaticamente com o estágio (vermelho=Gema, azul=Mega Cap) */
+
+      /* Subtítulo do estágio (ex: Mega Cap, Blue Chip) */
+      --gauge-subtitulo-tamanho: 09px;   /* Tamanho da fonte do subtítulo */
+      --gauge-subtitulo-peso:    600;    /* Espessura */
+      --gauge-subtitulo-cor:     #5a5a8a; /* Cor do subtítulo */
+
+      /* Legenda (Gema, Pequena, Média...) */
+      --gauge-legenda-tamanho:       11px;   /* Tamanho do nome do estágio */
+      --gauge-legenda-range-tamanho: 10px;    /* Tamanho do range (<$10M, $10B-$200B...) */
+      --gauge-legenda-cor:           #5a5a8a; /* Cor dos itens normais da legenda */
+      --gauge-legenda-range-cor:     #3a3a60; /* Cor dos ranges normais */
+      --gauge-legenda-ativo-cor:     #d0d0f0; /* Cor do item ativo (estágio atual) */
 
       /* ── MENU STICKY — ESTATÍSTICAS ─────────────────────────── */
       --sticky-lbl-tamanho:    9px;    /* Tamanho do label (PREÇO, MCAP...) */
@@ -1690,14 +1704,16 @@ header {
     }
     #gauge-svg { width: 100%; display: block; }
     .gauge-card .gauge-info { text-align: center; padding: 4px 0 0; }
-    .gauge-val { font-size: var(--gauge-valor-tamanho); font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; }
-    .gauge-cat-name { font-size: 10px; font-weight: 600; font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; color: var(--res-text-muted); margin-top: 2px; transition: color 0.4s ease; }
+    .gauge-val { font-size: var(--gauge-valor-tamanho); font-weight: var(--gauge-valor-peso); font-family: 'JetBrains Mono', monospace; color: #fff; line-height: 1.2; transition: color 0.4s ease; }
+    .gauge-cat-name { font-size: var(--gauge-subtitulo-tamanho); font-weight: var(--gauge-subtitulo-peso); font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; color: var(--gauge-subtitulo-cor); margin-top: 2px; transition: color 0.4s ease; }
     .gauge-card .stages { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
     .gauge-card .stage { display: flex; align-items: center; gap: 5px; padding: 3px 6px; border-radius: 8px; cursor: default; transition: background 0.2s; }
     .gauge-card .stage.active { background: rgba(108,92,231,0.18); }
     .stage-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .stage-name { font-size: var(--gauge-legenda-tamanho); font-weight: 500; color: var(--res-text-muted); white-space: nowrap; }
-    .stage-range{ font-size: var(--gauge-legenda-range-tamanho); color: var(--res-text-dim); margin-left: auto; white-space: nowrap; }
+    .stage-name { font-size: var(--gauge-legenda-tamanho); font-weight: 500; color: var(--gauge-legenda-cor); white-space: nowrap; }
+    .stage-name.active { color: var(--gauge-legenda-ativo-cor); }
+    .stage-range{ font-size: var(--gauge-legenda-range-tamanho); color: var(--gauge-legenda-range-cor); margin-left: auto; white-space: nowrap; }
+    .stage.active .stage-range { color: var(--gauge-legenda-ativo-cor); }
 
     /* ── MOBILE: sticky em grade 2 colunas ──
        No mobile o menu sticky não arrasta — exibe em linhas de 2 métricas */
